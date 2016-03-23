@@ -31,7 +31,6 @@ for i = 1:m
     for j = 1:n
         grad(j) += (h - y(i))*X(i,j)/m;
     end
-
 end
 
 
