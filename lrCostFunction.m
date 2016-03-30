@@ -41,11 +41,9 @@ h = sigmoid(X*theta);
 
 J = sum(-y.*log(h) - (1-y).*log(1-h))/m + lambda/(2*m)*sum(theta(2:end).^2);
 
-grad = X'*(h-y)/m;
 temp = theta;
 temp(1) = 0;
-grad = grad + lambda/m .* temp;
-
+grad = X'*(h-y)/m + lambda/m .* temp;
 
 % =============================================================
 
