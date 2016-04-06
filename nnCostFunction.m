@@ -83,16 +83,26 @@ for i = 1:m
     yi = zeros(K,1);
     yi(y(i)) = 1;
     for k = 1:K
-        J += sum(-yi(k)*log(h(i,k)) - (1-yi(k))*log(1-h(i,k)))/m;    % + lambda/(2*m)*sum(theta(2:end).^2)
+        J += sum(-yi(k)*log(h(i,k)) - (1-yi(k))*log(1-h(i,k)))/m;
+    end
+end
+
+N = 0;
+
+for j = 1:size(Theta1, 1)
+    for k = 2:size(Theta1, 2)
+        N += Theta1(j,k)^2;
     end
 end
 
 
+for j = 1:size(Theta2, 1)
+    for k = 2:size(Theta2, 2)
+        N += Theta2(j,k)^2;
+    end
+end
 
-
-
-
-
+J += lambda/(2*m)*N;
 
 
 % -------------------------------------------------------------
