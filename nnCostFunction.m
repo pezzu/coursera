@@ -8,8 +8,8 @@ function [J grad] = nnCostFunction(nn_params, ...
 %   [J grad] = NNCOSTFUNCTON(nn_params, hidden_layer_size, num_labels, ...
 %   X, y, lambda) computes the cost and gradient of the neural network. The
 %   parameters for the neural network are "unrolled" into the vector
-%   nn_params and need to be converted back into the weight matrices. 
-% 
+%   nn_params and need to be converted back into the weight matrices.
+%
 %   The returned parameter grad should be a "unrolled" vector of the
 %   partial derivatives of the neural network.
 %
@@ -24,8 +24,8 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
-% You need to return the following variables correctly 
+
+% You need to return the following variables correctly
 J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
@@ -46,12 +46,12 @@ Theta2_grad = zeros(size(Theta2));
 %         that your implementation is correct by running checkNNGradients
 %
 %         Note: The vector y passed into the function is a vector of labels
-%               containing values from 1..K. You need to map this vector into a 
+%               containing values from 1..K. You need to map this vector into a
 %               binary vector of 1's and 0's to be used with the neural network
 %               cost function.
 %
 %         Hint: We recommend implementing backpropagation using a for-loop
-%               over the training examples if you are implementing it for the 
+%               over the training examples if you are implementing it for the
 %               first time.
 %
 % Part 3: Implement regularization with the cost function and gradients.
@@ -62,15 +62,30 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% X:  5000x400
+% T1: 25x401
+% T2: 10x26
+% y:  5000x1
 
+K = size(Theta2, 1);
 
+A1 = [ones(m, 1) X];             % 5000x401
 
+Z2 = A1*Theta1';                 % 5000x25
+A2 = [ones(m, 1) sigmoid(Z2)];   % 5000x26
 
+Z3 = A2*Theta2';                 % 5000x10
+A3 = sigmoid(Z3);
 
+h = A3;                          % 5000x10
 
-
-
-
+for i = 1:m
+    yi = zeros(K,1);
+    yi(y(i)) = 1;
+    for k = 1:K
+        J += sum(-yi(k)*log(h(i,k)) - (1-yi(k))*log(1-h(i,k)))/m;    % + lambda/(2*m)*sum(theta(2:end).^2)
+    end
+end
 
 
 
