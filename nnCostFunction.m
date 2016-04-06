@@ -69,21 +69,17 @@ Theta2_grad = zeros(size(Theta2));
 
 K = size(Theta2, 1);
 
-A1 = [ones(m, 1) X];             % 5000x401
-
-Z2 = A1*Theta1';                 % 5000x25
-A2 = [ones(m, 1) sigmoid(Z2)];   % 5000x26
-
-Z3 = A2*Theta2';                 % 5000x10
-A3 = sigmoid(Z3);
-
-h = A3;                          % 5000x10
-
 for i = 1:m
+    a1 = [1 X(i,:)];             % 1x401
+    z2 = a1*Theta1';             % 1x25
+    a2 = [1 sigmoid(z2)];        % 1x26
+    z3 = a2*Theta2';             % 1x10
+    h = sigmoid(z3);             % 1x10
+
     yi = zeros(K,1);
     yi(y(i)) = 1;
     for k = 1:K
-        J += sum(-yi(k)*log(h(i,k)) - (1-yi(k))*log(1-h(i,k)))/m;
+        J += sum(-yi(k)*log(h(k)) - (1-yi(k))*log(1-h(k)))/m;
     end
 end
 
