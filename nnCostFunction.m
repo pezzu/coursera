@@ -96,24 +96,31 @@ for i = 1:m
     D2 += delta3'*a2;           % 10x1 * 1x26 = 10x26
 end
 
-N = 0;
+Nj = 0;
+Ng1 = zeros(size(Theta1_grad));
+Ng2 = zeros(size(Theta2_grad));
 
 for j = 1:size(Theta1, 1)
     for k = 2:size(Theta1, 2)
-        N += Theta1(j,k)^2;
+        Nj += Theta1(j,k)^2;
+        Ng1(j,k) = Theta1(j,k);
     end
 end
 
 for j = 1:size(Theta2, 1)
     for k = 2:size(Theta2, 2)
-        N += Theta2(j,k)^2;
+        Nj += Theta2(j,k)^2;
+        Ng2(j,k) = Theta2(j,k);
     end
 end
 
-J += lambda/(2*m)*N;
+J += lambda/(2*m)*Nj;
 
-Theta1_grad = D1/m;
-Theta2_grad = D2/m;
+Theta1_grad = D1/m + lambda/m*Ng1;
+Theta2_grad = D2/m + lambda/m*Ng2;
+
+
+
 
 % -------------------------------------------------------------
 
