@@ -25,10 +25,9 @@ h = (theta'*X');
 
 J = (sum((h' - y) .^ 2) + lambda*sum(theta(2:end).^2))/(2*m);
 
+grad = (h' - y)'*X / m;
 
-
-
-
+grad(2:end) += lambda.*theta'(2:end)/m;
 
 
 
