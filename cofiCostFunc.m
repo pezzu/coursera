@@ -41,21 +41,20 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+% size(X)
+% size(Theta)
+% size(Y)
+% size(X_grad)
 
 h = X*Theta';
 J = sum(sum(((h - Y).*R).^2)) / 2;
 
-% grad = ((h - Y).*R)'*X;
+% size(Theta_grad)
 
+X_grad = ((h - Y).*R)*Theta;
+Theta_grad = ((h - Y).*R)'*X;
 
-
-
-
-
-
-
-
-
+% size(Theta_grad)
 
 % =============================================================
 
