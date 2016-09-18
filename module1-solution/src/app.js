@@ -12,11 +12,15 @@ function countDishes(dishes) {
 }
 
 function messageHint(numberOfDishes) {
+    var message = {};
+
     if(!numberOfDishes || numberOfDishes === 0) {
-        var message = 'Please enter data first';
+        message.text = 'Please enter data first';
+        message.class = 'error';
     }
     else {
-        var message = (numberOfDishes > 3)? 'Too much!' : 'Enjoy!';
+        message.text = (numberOfDishes > 3)? 'Too much!' : 'Enjoy!';
+        message.class = 'note';
     }
 
     return message;
@@ -24,11 +28,13 @@ function messageHint(numberOfDishes) {
 
 LunchCheckController.$inject = ['$scope'];
 function LunchCheckController($scope) {
-    $scope.messageText = '';
 
     $scope.checkDishes = function() {
         var numberOfDishes = countDishes($scope.dishes);
-        $scope.messageText = messageHint(numberOfDishes);
+        var message = messageHint(numberOfDishes);
+
+        $scope.messageText = message.text;
+        $scope.messageClass = message.class;
     };
 }
 
