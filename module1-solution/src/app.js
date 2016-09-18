@@ -5,10 +5,15 @@ angular.module('LunchCheck', [])
 .controller('LunchCheckController', LunchCheckController);
 
 function countDishes(dishes) {
-    return dishes.split(",")
-                 .map(function(s) { return s.trim(); })
-                 .filter(function(s) { return s.length > 0; })
-                 .length;
+    if(!dishes) {
+        return 0;
+    }
+    else {
+        return dishes.split(",")
+                     .map(function(s) { return s.trim(); })
+                     .filter(function(s) { return s.length > 0; })
+                     .length;
+    }
 }
 
 function messageHint(numberOfDishes) {
