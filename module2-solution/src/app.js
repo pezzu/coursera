@@ -2,12 +2,12 @@
 'use strict';
 
 const ShoppingListItems = [
-   { name: "cookies", quantity: 10 },
-   { name: "cookies", quantity: 10 },
-   { name: "cookies", quantity: 10 },
-   { name: "cookies", quantity: 10 },
-   { name: "cookies", quantity: 10 },
-   { name: "cookies", quantity: 10 }
+   { name: "bananas", quantity: 3 },
+   { name: "apples", quantity: 8 },
+   { name: "mangos", quantity: 2 },
+   { name: "lettuce", quantity: 1 },
+   { name: "tomatoes", quantity: 4 },
+   { name: "cucumbers", quantity: 6 }
 ];
 
 angular.module('ShoppingList', [])
@@ -21,6 +21,10 @@ function ToBuyShoppingController(ShoppingListCheckOffService) {
     var buyList = this;
 
     buyList.items = ShoppingListCheckOffService.getBuyItems();
+
+    buyList.buy = function(index) {
+        ShoppingListCheckOffService.chechOffItem(index);
+    };
 }
 
 
