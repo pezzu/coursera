@@ -25,6 +25,10 @@ function FoundItemsDirective() {
 
 function FoundItemsDirectiveController() {
    var list = this;
+
+   list.itemsExist = function() {
+      return list.items.length > 0;
+   };
 }
 
 NarrowItDownController.$inject = ['MenuSearchService'];
@@ -35,10 +39,15 @@ function NarrowItDownController(MenuSearchService) {
    menuItems.found = [];
 
    menuItems.search = function() {
-      MenuSearchService.getMatchedMenuItems(menuItems.searchTerm)
-         .then(function(result) {
-            menuItems.found = result;
-         });
+      if(menuItems.searchTerm === '')  {
+         menuItems.found = [];
+      }
+      else {
+         MenuSearchService.getMatchedMenuItems(menuItems.searchTerm)
+            .then(function(result) {
+               menuItems.found = result;
+            });
+      }
    }
 
    menuItems.removeItem = function(index) {
