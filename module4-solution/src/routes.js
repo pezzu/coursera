@@ -31,11 +31,16 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     }
   })
 
-  // .state('items', {
-  //   url: '/item-detail/{itemId}',
-  //   templateUrl: 'src/shoppinglist/templates/item-detail.template.html',
-  //   controller: "ItemDetailController as itemDetail"
-  // })
+  .state('items', {
+    url: '/categories-list/{categoryId}',
+    templateUrl: 'views/main-category-items.html',
+    controller: 'CategoryItemsController as categoryItems',
+    resolve: {
+      items: ['$stateParams', 'MenuDataService', function ($stateParams, MenuDataService) {
+        return MenuDataService.getItemsForCategory($stateParams.categoryId);
+      }]
+    }
+  })
   ;
 
 }
