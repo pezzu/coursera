@@ -2,12 +2,12 @@
    <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Special instuctions</th>
+      <!-- <th>Special instuctions</th> -->
       <th></th>
    </tr>
    <tr ng-repeat="item in $ctrl.items" ui-sref="items({categoryId: $ctrl.items[$index].short_name})">
       <td>{{ item.short_name }}</td>
       <td>{{ item.name }}</td>
-      <td>{{ item.special_instructions }}</td>
+      <!-- <td>{{ item.special_instructions }}</td> -->
    </tr>
 </table>
