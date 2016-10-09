@@ -2,12 +2,12 @@
    <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Description</th>
+      <th>Special instuctions</th>
       <th></th>
    </tr>
-   <tr ng-repeat="item in list.items"> <!-- link here-->
+   <tr ng-repeat="item in $ctrl.items">
       <td>{{ item.short_name }}</td>
       <td>{{ item.name }}</td>
-      <td>{{ item.description }}</td>
+      <td>{{ item.special_instructions }}</td>
    </tr>
 </table>
