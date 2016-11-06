@@ -1,0 +1,40 @@
+<h1 class="text-center">Sign Up here</h1>
+
+<div class="container">
+   <form name="signUpForm" class="col-md-6" novalidate>
+   <div class="form-group">
+      <label for="firstName">First name:</label>
+      <input type="text" class="form-control" id="firstName" name="firstName"
+             required
+             ng-model="narrowMenu.searchTerm">
+   </div>
+   <div class="form-group">
+      <label for="lastName">Last name:</label>
+      <input type="text" class="form-control" id="lastName" name="lastName"
+             required 
+             ng-model="narrowMenu.searchTerm">
+   </div>
+   <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" class="form-control" id="email" name="email" 
+             required
+             ng-model="narrowMenu.searchTerm">
+      <span ng-if="signUpForm.email.$invalid && signUpForm.email.$touched">
+            Must be a valid email address: handle@domain format
+      </span>
+   </div>
+   <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" class="form-control" id="phone" name="phone"
+             required
+             ng-model="narrowMenu.searchTerm">
+   </div>
+   <div class="form-group">
+      <label for="dish">Favorite dish:</label>
+      <input type="text" class="form-control" id="dish" name="dish"
+             required
+             ng-model="narrowMenu.searchTerm">
+   </div>
+   <button type="submit" class="btn btn-default">Submit</button>
+   </form>
+</div>
