@@ -8,9 +8,9 @@ function SignUpController(MenuService, SignUpService) {
    var $ctrl = this;
    
    $ctrl.submit = function () {
-      MenuService.getDishById($ctrl.dishShortName.toUpperCase())
-         .then(function (dish) {
-            $ctrl.dishName = dish.name;
+      MenuService.getMenuItem($ctrl.dishShortName.toUpperCase())
+         .then(function (menuItem) {
+            $ctrl.menuItem = menuItem;
             $ctrl.dishNotFound = false;
 
             var user = {
@@ -18,7 +18,7 @@ function SignUpController(MenuService, SignUpService) {
                last: $ctrl.lastName,
                email: $ctrl.email,
                phone: $ctrl.phone,
-               dish: $ctrl.dishName
+               menuItem: $ctrl.menuItem
             };            
             SignUpService.save(user);
 

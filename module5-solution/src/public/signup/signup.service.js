@@ -4,14 +4,18 @@
 
 angular.module('public')
 .service('SignUpService', SignUpService);
-
+ 
 function SignUpService() {
    var service = this;
    
+   service.user = {};
    service.save = function (user) {
       service.user = user;
    }
 
+   service.load = function () {
+      return service.user;
+   }   
 
 }
    
