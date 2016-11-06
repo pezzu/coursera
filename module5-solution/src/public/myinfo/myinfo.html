@@ -1,5 +1,5 @@
-<h2 class="text-center" ng-if="!myInfoCtrl.userInfo.first">Not Signed Up Yet. <span><a ui-sref="public.signup">Sign up Now!</a></span></h2>
-<div class="container" ng-if="myInfoCtrl.userInfo.first">
+<h2 class="text-center" ng-if="!myInfoCtrl.userInfo">Not Signed Up Yet. <span><a ui-sref="public.signup">Sign up Now!</a></span></h2>
+<div class="container" ng-if="myInfoCtrl.userInfo">
    <div>First name: {{ myInfoCtrl.userInfo.first }}</div>
    <div>Last name: {{ myInfoCtrl.userInfo.last }}</div>
    <div>Email: {{ myInfoCtrl.userInfo.email }}</div>

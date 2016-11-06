@@ -8,7 +8,6 @@ angular.module('public')
 function SignUpService() {
    var service = this;
    
-   service.user = {};
    service.save = function (user) {
       service.user = user;
    }
@@ -16,7 +15,6 @@ function SignUpService() {
    service.load = function () {
       return service.user;
    }   
-
 }
    
 })();
