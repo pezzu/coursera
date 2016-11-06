@@ -11,7 +11,6 @@ function SignUpController(MenuService, SignUpService) {
       MenuService.getMenuItem($ctrl.dishShortName.toUpperCase())
          .then(function (menuItem) {
             $ctrl.menuItem = menuItem;
-            $ctrl.dishNotFound = false;
 
             var user = {
                first: $ctrl.firstName,
@@ -25,7 +24,6 @@ function SignUpController(MenuService, SignUpService) {
             $ctrl.saved = true;
          })
          .catch(function (error) {
-            $ctrl.dishNotFound = true;
             $ctrl.saved = false;
          });
    }

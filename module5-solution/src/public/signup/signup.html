@@ -45,9 +45,10 @@
             <label for="dish">Favorite dish:</label>
             <input type="text" class="form-control" id="dish" name="dishShortName"
                   required
+                  menu-item-exists
                   ng-model="signupCtrl.dishShortName">
-            <span ng-if="signupCtrl.dishNotFound">
-                  No such menu number exists
+            <span ng-if="signUpForm.dishShortName.$invalid && signUpForm.dishShortName.$dirty">
+                  No such menu item exists
             </span>     
       </div>
       <button type="submit" class="btn btn-default" 
