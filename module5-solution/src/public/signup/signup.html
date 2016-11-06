@@ -2,39 +2,58 @@
 
 <div class="container">
    <form name="signUpForm" class="col-md-6" novalidate>
-   <div class="form-group">
-      <label for="firstName">First name:</label>
-      <input type="text" class="form-control" id="firstName" name="firstName"
-             required
-             ng-model="narrowMenu.searchTerm">
-   </div>
-   <div class="form-group">
-      <label for="lastName">Last name:</label>
-      <input type="text" class="form-control" id="lastName" name="lastName"
-             required 
-             ng-model="narrowMenu.searchTerm">
-   </div>
-   <div class="form-group">
-      <label for="email">Email address:</label>
-      <input type="email" class="form-control" id="email" name="email" 
-             required
-             ng-model="narrowMenu.searchTerm">
-      <span ng-if="signUpForm.email.$invalid && signUpForm.email.$touched">
-            Must be a valid email address: handle@domain format
-      </span>
-   </div>
-   <div class="form-group">
-      <label for="phone">Phone:</label>
-      <input type="text" class="form-control" id="phone" name="phone"
-             required
-             ng-model="narrowMenu.searchTerm">
-   </div>
-   <div class="form-group">
-      <label for="dish">Favorite dish:</label>
-      <input type="text" class="form-control" id="dish" name="dish"
-             required
-             ng-model="narrowMenu.searchTerm">
-   </div>
-   <button type="submit" class="btn btn-default">Submit</button>
+      <div class="form-group">
+            <label for="firstName">First name:</label>
+            <input type="text" class="form-control" id="firstName" name="firstName"
+                  required
+                  ng-model="signupCtrl.firstName">
+            <span
+                  ng-if="signUpForm.firstName.$error.required && signUpForm.firstName.$touched">
+                  First name must be specified
+            </span>
+      </div>
+      <div class="form-group">
+            <label for="lastName">Last name:</label>
+            <input type="text" class="form-control" id="lastName" name="lastName"
+                  required 
+                  ng-model="signupCtrl.lastName">
+            <span
+                  ng-if="signUpForm.lastName.$error.required && signUpForm.lastName.$touched">
+                  Last name must be specified
+            </span>
+      </div>
+      <div class="form-group">
+            <label for="email">Email address:</label>
+            <input type="email" class="form-control" id="email" name="email" 
+                  required
+                  ng-model="signupCtrl.email">
+            <span ng-if="signUpForm.email.$invalid && signUpForm.email.$touched">
+                  Must be a valid email address: handle@domain format
+            </span>
+      </div>
+      <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" class="form-control" id="phone" name="phone"
+                  required
+                  pattern="(\d{3})-(\d{3})-(\d{4})"
+                  ng-model="signupCtrl.phone">
+            <span ng-if="signUpForm.phone.$invalid && signUpForm.phone.$touched">
+                  Phone must be in the format ###-###-####
+            </span>  
+      </div>
+      <div class="form-group">
+            <label for="dish">Favorite dish:</label>
+            <input type="text" class="form-control" id="dish" name="dishShortName"
+                  required
+                  ng-model="signupCtrl.dishShortName">
+            <span ng-if="signupCtrl.dishNotFound">
+                  No such menu number exists
+            </span>     
+      </div>
+      <button type="submit" class="btn btn-default" 
+              ng-disabled="signUpForm.$invalid"
+              ng-click="signupCtrl.submit()">
+         Submit
+      </button>
    </form>
 </div>
