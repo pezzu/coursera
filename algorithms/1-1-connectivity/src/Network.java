@@ -5,22 +5,23 @@ public class Network {
     public Network(int size) {
         connections = new int[size];
         for(int i = 0; i < connections.length; i++) {
-            connections[i] = i;
+            connections[i] = 0;
         }
+    }
+
+    private int root(int index) {
+        while(connections[index] != 0) {
+            index = connections[index];
+        }
+
+        return index;
     }
 
     public void connect(int a, int b) {
-        int aid = connections[a];
-        int bid = connections[b];
-        
-        for(int i = 0; i < connections.length; i++) {
-            if(connections[i] == bid) {
-                connections[i] = aid;
-            }
-        }
+        connections[root(a)] = root(b);
     }
 
     public boolean isConnected(int a, int b) {
-        return connections[a] == connections[b];
+        return root(a) == root(b);
     }
 }
