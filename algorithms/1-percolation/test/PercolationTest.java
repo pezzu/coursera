@@ -14,6 +14,12 @@ public class PercolationTest {
     }
 
     @Test
+    public void testPercolatesCornerCase() {
+        Percolation p = new Percolation(1);
+        assertFalse(p.percolates());
+    }
+
+    @Test
     public void testIsOpen() {
         Percolation p = new Percolation(5);
         assertFalse(p.isOpen(1, 1));
@@ -63,6 +69,31 @@ public class PercolationTest {
         assertTrue(p.isFull(2, 2));
         assertTrue(p.isFull(3, 2));
         assertTrue(p.isFull(3, 3));
+    }
+
+    @Test
+    public void testIsFullBackwash() {
+        Percolation p = new Percolation(3);
+
+        p.open(1,3);
+        assertTrue(p.isFull(1, 3));
+
+        p.open(2, 3);
+        assertTrue(p.isFull(2, 3));
+
+        p.open(3, 3);
+        assertTrue(p.isFull(3, 3));
+
+        p.open(3, 1);
+        assertFalse(p.isFull(3, 1));
+
+        p.open(2, 1);
+        assertFalse(p.isFull(2, 1));
+
+        p.open(1, 1);
+        assertTrue(p.isFull(1, 1));
+        assertTrue(p.isFull(2, 1));
+        assertTrue(p.isFull(3, 1));
     }
 
     @Test
