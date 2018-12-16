@@ -3,12 +3,13 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    private int size;
-    private WeightedQuickUnionUF sites;
-    private boolean[] opened;
+    private final int size;
+    private final WeightedQuickUnionUF sites;
+    private final boolean[] opened;
+    private int numberOfOpened = 0;
 
     private void checkArgs(int row, int col) {
-        if( row <= 0 || col <= 0 || row > size || col > size ) {
+        if ( row <= 0 || col <= 0 || row > size || col > size ) {
             throw new java.lang.IllegalArgumentException();
         }
     }
@@ -37,19 +38,22 @@ public class Percolation {
 
     // open site (row, col) if it is not open already
     public void open(int row, int col) {
-        checkArgs(row, col);
-        opened[(row-1) * size + col - 1] = true;
-        if(row > 1 && isOpen(row - 1, col)) {
-            connect(row, col, row - 1, col);
-        }
-        if(row < size && isOpen(row + 1, col)) {
-            connect(row, col, row + 1, col);
-        }
-        if(col > 1 && isOpen(row, col - 1)) {
-            connect(row, col, row, col - 1);
-        }
-        if(col < size && isOpen(row, col + 1)) {
-            connect(row, col, row, col + 1);
+        if(!isOpen(row, col)) {
+            opened[(row - 1) * size + col - 1] = true;
+            numberOfOpened++;
+
+            if (row > 1 && isOpen(row - 1, col)) {
+                connect(row, col, row - 1, col);
+            }
+            if (row < size && isOpen(row + 1, col)) {
+                connect(row, col, row + 1, col);
+            }
+            if (col > 1 && isOpen(row, col - 1)) {
+                connect(row, col, row, col - 1);
+            }
+            if (col < size && isOpen(row, col + 1)) {
+                connect(row, col, row, col + 1);
+            }
         }
     }
 
@@ -61,18 +65,12 @@ public class Percolation {
 
     // is site (row, col) full?
     public boolean isFull(int row, int col) {
-        return !isOpen(row, col);
+        return isOpen(row, col) && sites.connected(0, (row-1)*size + col);
     }
 
     // number of open sites
     public int numberOfOpenSites() {
-        int num = 0;
-        for(int i=0; i < opened.length; i++) {
-            if(opened[i]) {
-                num++;
-            }
-        }
-        return num;
+        return numberOfOpened;
     }
 
     // does the system percolate?

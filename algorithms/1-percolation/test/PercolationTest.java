@@ -36,23 +36,33 @@ public class PercolationTest {
 
     @Test
     public void testIsFull() {
-        Percolation p = new Percolation(5);
-        assertTrue(p.isFull(1, 1));
-        assertTrue(p.isFull(1, 2));
-        assertTrue(p.isFull(2, 1));
-        assertTrue(p.isFull(2, 2));
-        assertTrue(p.isFull(3, 3));
-        assertTrue(p.isFull(4, 4));
-        assertTrue(p.isFull(4, 5));
+        Percolation p = new Percolation(3);
+        for(int i = 0; i < 3; i++) {
+            for(int j =0; j < 3; j++) {
+                assertFalse(p.isFull(i+1, j+1));
+            }
+        }
 
         p.open(1,1);
-        assertFalse(p.isFull(1, 1));
+        assertTrue(p.isFull(1, 1));
 
-        p.open(2, 1);
-        assertFalse(p.isFull(2, 1));
+        p.open(1, 3);
+        assertTrue(p.isFull(1, 3));
 
-        p.open(5, 4);
-        assertFalse(p.isFull(5, 4));
+        p.open(2, 2);
+        assertFalse(p.isFull(2, 2));
+
+        p.open(3, 2);
+        assertFalse(p.isFull(3, 2));
+
+        p.open(3, 3);
+        assertFalse(p.isFull(3, 3));
+
+        p.open(1, 2);
+        assertTrue(p.isFull(1, 2));
+        assertTrue(p.isFull(2, 2));
+        assertTrue(p.isFull(3, 2));
+        assertTrue(p.isFull(3, 3));
     }
 
     @Test
