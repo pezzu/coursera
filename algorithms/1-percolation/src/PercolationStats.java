@@ -5,12 +5,30 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
 
-    private double[] fractions;
+    private static final double CONFIDENCE_95 = 1.96;
 
-    private double mean;
-    private double stddev;
-    private double confidenceLo;
-    private double confidenceHi;
+    private final double mean;
+    private final double stddev;
+    private final double confidenceLo;
+    private final double confidenceHi;
+
+    // perform trials independent experiments on an n-by-n grid
+    public PercolationStats(int n, int trials) {
+        if( n <= 0 || trials <= 0) {
+            throw new java.lang.IllegalArgumentException();
+        }
+
+        double[] fractions = new double[trials];
+        for(int i = 0; i < trials; i++) {
+            fractions[i] = fraction(n);
+        }
+
+        mean = StdStats.mean(fractions);
+        stddev = StdStats.stddev(fractions);
+
+        confidenceLo = mean - CONFIDENCE_95*stddev / Math.sqrt(trials);
+        confidenceHi = mean + CONFIDENCE_95*stddev / Math.sqrt(trials);
+    }
 
     private double fraction(int n) {
         Percolation p = new Percolation(n);
@@ -19,24 +37,6 @@ public class PercolationStats {
         }
 
         return 1.0 * p.numberOfOpenSites() / (n*n);
-    }
-
-    // perform trials independent experiments on an n-by-n grid
-    public PercolationStats(int n, int trials) {
-        if( n <= 0 || trials <= 0) {
-            throw new java.lang.IllegalArgumentException();
-        }
-
-        fractions = new double[trials];
-        for(int i = 0; i < trials; i++) {
-            fractions[i] = fraction(n);
-        }
-
-        mean = StdStats.mean(fractions);
-        stddev = StdStats.stddev(fractions);
-
-        confidenceLo = mean - 1.96*stddev / Math.sqrt(trials);
-        confidenceHi = mean + 1.96*stddev / Math.sqrt(trials);
     }
 
     // sample mean of percolation threshold
