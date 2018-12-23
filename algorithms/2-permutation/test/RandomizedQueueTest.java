@@ -2,6 +2,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.testng.Assert.*;
@@ -159,5 +160,38 @@ public class RandomizedQueueTest {
         }
 
         assertFalse(result.get(0) == 1 && result.get(1) == 2 && result.get(2) == 3);
+    }
+
+    @Test(expectedExceptions = java.lang.IllegalArgumentException.class)
+    public void enqueueNull() {
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        r.enqueue(null);
+    }
+
+    @Test(expectedExceptions = java.util.NoSuchElementException.class)
+    public void sampleEmpty() {
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        r.sample();
+    }
+
+    @Test(expectedExceptions = java.util.NoSuchElementException.class)
+    public void dequeueEmpty() {
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        r.dequeue();
+    }
+
+    @Test(expectedExceptions = java.util.NoSuchElementException.class)
+    public void iteratorNextEmpty() {
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        Iterator<Integer> i = r.iterator();
+        i.next();
+    }
+
+    @Test(expectedExceptions = java.lang.UnsupportedOperationException.class)
+    public void iteratorRemove() {
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        r.enqueue(5);
+        Iterator<Integer> i = r.iterator();
+        i.remove();
     }
 }

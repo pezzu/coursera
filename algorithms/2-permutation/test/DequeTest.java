@@ -62,6 +62,45 @@ public class DequeTest {
         assertEquals(result, 0);
     }
 
+    @Test(expectedExceptions = java.lang.IllegalArgumentException.class)
+    public void addFirstNull() {
+        Deque<Integer> d = new Deque<>();
+        d.addFirst(null);
+    }
+
+    @Test(expectedExceptions = java.lang.IllegalArgumentException.class)
+    public void addLastNull() {
+        Deque<Integer> d = new Deque<>();
+        d.addLast(null);
+    }
+
+    @Test(expectedExceptions = java.util.NoSuchElementException.class)
+    public void removeFirstEmpty() {
+        Deque<Integer> d = new Deque<>();
+        d.removeFirst();
+    }
+
+    @Test(expectedExceptions = java.util.NoSuchElementException.class)
+    public void removeLastEmpty() {
+        Deque<Integer> d = new Deque<>();
+        d.removeLast();
+    }
+
+    @Test(expectedExceptions = java.util.NoSuchElementException.class)
+    public void iteratorNextEmpty() {
+        Deque<Integer> d = new Deque<>();
+        Iterator<Integer> i = d.iterator();
+        i.next();
+    }
+
+    @Test(expectedExceptions = java.lang.UnsupportedOperationException.class)
+    public void iteratorRemove() {
+        Deque<Integer> d = new Deque<>();
+        d.addFirst(5);
+        Iterator<Integer> i = d.iterator();
+        i.remove();
+    }
+
     @Test
     public void iterator() {
         Deque<Integer> d = new Deque<>();
