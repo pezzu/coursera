@@ -194,4 +194,17 @@ public class RandomizedQueueTest {
         Iterator<Integer> i = r.iterator();
         i.remove();
     }
+
+    @Test
+    public void overCapacity() {
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        for(int i = 0; i<RandomizedQueue.INITIAL_CAPACITY; i++) {
+            r.enqueue(i);
+        }
+
+        r.enqueue(0);
+        r.enqueue(0);
+
+        assertEquals(r.size(), RandomizedQueue.INITIAL_CAPACITY + 2);
+    }
 }
