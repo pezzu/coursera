@@ -5,10 +5,10 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
 
-    static final int INITIAL_CAPACITY = 20;
+    private static final int INITIAL_CAPACITY = 20;
 
     private Item[] elements = (Item[]) new Object[INITIAL_CAPACITY];
-    int tail = 0;
+    private int tail = 0;
 
     private class RandomIterator implements Iterator<Item> {
 
