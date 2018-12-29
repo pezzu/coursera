@@ -61,5 +61,14 @@ public class LineSegment {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if((other == null) || (other.getClass() != LineSegment.class)) {
+            return false;
+        }
+
+        LineSegment o = (LineSegment)other;
+        return (this.p.equals(o.p) && this.q.equals(o.q)) || (this.q.equals(p) && this.p.equals(q));
+    }
 }
 
