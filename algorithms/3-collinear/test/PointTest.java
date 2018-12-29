@@ -1,24 +1,25 @@
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class PointTest {
     @Test
     public void compareToByY() {
         Point p1 = new Point(5, 6);
-        Point p2 = new Point(6, 7);
+        Point p2 = new Point(6, 14);
 
-        assertEquals(p1.compareTo(p2), -1);
-        assertEquals(p2.compareTo(p1), 1);
+        assertTrue(p1.compareTo(p2) < 0);
+        assertTrue(p2.compareTo(p1) > 0);
     }
 
     @Test
     public void compareToByX() {
         Point p1 = new Point(5, 8);
-        Point p2 = new Point(6, 8);
+        Point p2 = new Point(8, 8);
 
-        assertEquals(p1.compareTo(p2), -1);
-        assertEquals(p2.compareTo(p1), 1);
+        assertTrue(p1.compareTo(p2) < 0);
+        assertTrue(p2.compareTo(p1) > 0);
     }
 
     @Test
@@ -35,14 +36,14 @@ public class PointTest {
         Point p11 = new Point(-1, 0);
         Point p12 = new Point(0, 2);
 
-        assertEquals(p11.slopeTo(p12), 2);
-        assertEquals(p12.slopeTo(p11), 2);
+        assertEquals(p11.slopeTo(p12), 2.0);
+        assertEquals(p12.slopeTo(p11), 2.0);
 
         Point p21 = new Point(0, 0);
         Point p22 = new Point(1, -3);
 
-        assertEquals(p21.slopeTo(p22), -3);
-        assertEquals(p22.slopeTo(p21), -3);
+        assertEquals(p21.slopeTo(p22), -3.0);
+        assertEquals(p22.slopeTo(p21), -3.0);
     }
 
         @Test
@@ -50,8 +51,8 @@ public class PointTest {
         Point p1 = new Point(0, 0);
         Point p2 = new Point(6, 0);
 
-        assertEquals(p1.slopeTo(p2), +0.0f);
-        assertEquals(p2.slopeTo(p1), +0.0f);
+        assertEquals(p1.slopeTo(p2), +0.0);
+        assertEquals(p2.slopeTo(p1), +0.0);
     }
 
     @Test
