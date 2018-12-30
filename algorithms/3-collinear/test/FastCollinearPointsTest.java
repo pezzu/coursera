@@ -22,7 +22,7 @@ public class FastCollinearPointsTest {
     }
 
     @Test
-    public void BruteCollinearPointsCollinear6() {
+    public void FastCollinearPointsCollinear6() {
         Point[] points = {
                 new Point(19000, 10000),
                 new Point(18000, 10000),
@@ -43,7 +43,7 @@ public class FastCollinearPointsTest {
     }
 
     @Test
-    public void BruteCollinearPointsCollinear8() {
+    public void FastCollinearPointsCollinear8() {
         Point[] points = {
                 new Point(10000, 0),
                 new Point(0, 10000),
@@ -67,7 +67,31 @@ public class FastCollinearPointsTest {
     }
 
     @Test
-    public void BruteCollinearPointsCollinearNone() {
+    public void FastCollinearPointsCross() {
+        Point[] points = {
+                new Point(3, 2),
+                new Point(4, 4),
+                new Point(7, 4),
+                new Point(5, 6),
+                new Point(2, 9),
+                new Point(3, 8),
+                new Point(6, 8),
+                new Point(7, 10)
+        };
+
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
+
+        LineSegment[] expected = {
+                new LineSegment(new Point(3, 2), new Point(7, 10)),
+                new LineSegment(new Point(2, 9), new Point(7, 4))
+        };
+
+        assertArrayEquals(expected, collinear.segments());
+        assertEquals(collinear.numberOfSegments(), 2);
+    }
+
+    @Test
+    public void FastCollinearPointsCollinearNone() {
         Point[] points = {
                 new Point(0, 0),
                 new Point(0, 1),

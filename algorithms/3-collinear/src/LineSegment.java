@@ -68,7 +68,8 @@ public class LineSegment {
         }
 
         LineSegment o = (LineSegment)other;
-        return (this.p.equals(o.p) && this.q.equals(o.q)) || (this.q.equals(p) && this.p.equals(q));
+        return (this.p.compareTo(o.p) == 0 && this.q.compareTo(o.q) == 0)
+                || (this.q.compareTo(o.p) == 0 && this.p.compareTo(o.q) == 0);
     }
 }
 
