@@ -46,7 +46,15 @@ public class PointTest {
         assertEquals(p22.slopeTo(p21), -3.0);
     }
 
-        @Test
+    @Test
+    public void slopeToFractional() {
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(3, 2);
+
+        assertEquals(p1.slopeTo(p2), 0.5);
+    }
+
+    @Test
     public void slopeToHorizontal() {
         Point p1 = new Point(0, 0);
         Point p2 = new Point(6, 0);

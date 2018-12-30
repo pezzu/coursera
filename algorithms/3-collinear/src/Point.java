@@ -12,7 +12,7 @@ import java.util.Comparator;
 import edu.princeton.cs.algs4.StdDraw;
 
 public class Point implements Comparable<Point> {
-    
+
     private final int x;     // x-coordinate of this point
     private final int y;     // y-coordinate of this point
     private final Comparator<Point> SLOPE_ORDER = new SlopeOrder();
@@ -87,7 +87,7 @@ public class Point implements Comparable<Point> {
             return Double.POSITIVE_INFINITY;
         }
         else {
-            return (that.y - this.y) / (that.x - this.x);
+            return (that.y - this.y) / (double)(that.x - this.x);
         }
     }
 
