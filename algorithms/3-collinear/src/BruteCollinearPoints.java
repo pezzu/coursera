@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Queue;
 
 import java.util.Arrays;
 
@@ -25,25 +26,23 @@ public class BruteCollinearPoints {
             }
         }
 
-        int n = 0;
-        LineSegment[] temp = new LineSegment[combinations(points.length)];
+        Queue<LineSegment> temp = new Queue<LineSegment>();
 
         for(int i = 0; i < points.length; i++) {
             for(int j = i+1; j < points.length; j++) {
                 for(int k = j+1; k < points.length; k++) {
                     for(int l = k+1; l < points.length; l++) {
                         if(isCollinear(points[i], points[j], points[k], points[l])) {
-                            temp[n] = new LineSegment(points[i], points[l]);
-                            n++;
+                            temp.enqueue(new LineSegment(points[i], points[l]));
                         }
                     }
                 }
             }
         }
 
-        segments = new LineSegment[n];
-        for(int i = 0; i < n; i++) {
-            segments[i] = temp[i];
+        segments = new LineSegment[temp.size()];
+        for(int i = 0; i < segments.length; i++) {
+            segments[i] = temp.dequeue();
         }
     }
 
@@ -60,20 +59,6 @@ public class BruteCollinearPoints {
     private boolean isCollinear(Point p1, Point p2, Point p3, Point p4) {
         double slope = p1.slopeTo(p2);
         return p1.slopeTo(p3) == slope && p1.slopeTo(p4) == slope;
-    }
-
-    private int combinations(int n) {
-        return factorial(n-3, n) / factorial(1, 4);
-    }
-
-    private int factorial(int from, int to) {
-        int result = 1;
-
-        for(int c = from; c <= to; c++) {
-            result *= c;
-        }
-
-        return result;
     }
 
     public static void main(String[] args) {

@@ -37,11 +37,14 @@ public class BruteCollinearPointsTest {
 
         LineSegment[] expected = {
                 new LineSegment(new Point(14000, 10000), new Point(21000, 10000)),
+                new LineSegment(new Point(14000, 10000), new Point(32000, 10000)),
+                new LineSegment(new Point(14000, 10000), new Point(32000, 10000)),
+                new LineSegment(new Point(14000, 10000), new Point(32000, 10000)),
                 new LineSegment(new Point(18000, 10000), new Point(32000, 10000))
         };
 
         assertArrayEquals(expected, collinear.segments());
-        assertEquals(collinear.numberOfSegments(), 2);
+        assertEquals(collinear.numberOfSegments(), 5);
     }
 
     @Test
@@ -88,12 +91,15 @@ public class BruteCollinearPointsTest {
 
         LineSegment[] expected = {
                 new LineSegment(new Point(3, 2), new Point(6, 8)),
+                new LineSegment(new Point(3, 2), new Point(7, 10)),
+                new LineSegment(new Point(3, 2), new Point(7, 10)),
+                new LineSegment(new Point(3, 2), new Point(7, 10)),
                 new LineSegment(new Point(4, 4), new Point(7, 10)),
                 new LineSegment(new Point(2, 9), new Point(7, 4))
         };
 
         assertArrayEquals(expected, collinear.segments());
-        assertEquals(collinear.numberOfSegments(), 3);
+        assertEquals(collinear.numberOfSegments(), 6);
     }
 
     @Test

@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.Queue;
 
 import java.util.Arrays;
 
@@ -26,11 +27,10 @@ public class FastCollinearPoints {
             }
         }
 
-        int numberOfSegments = 0;
-        Point[][] tempSegments = new Point[points.length / 4][2];
+        Queue<Point[]> tempSegments = new Queue<Point[]>();
 
         for(int i = 0; i < points.length-1; i++) {
-            if(!isIncluded(points[i], tempSegments, numberOfSegments)) {
+            if(!isIncluded(points[i], tempSegments)) {
                 Point[] tempPoints = copyOf(points, i, points.length);
                 Arrays.sort(tempPoints, points[i].slopeOrder());
 
@@ -43,24 +43,23 @@ public class FastCollinearPoints {
                     } else {
                         slope = points[i].slopeTo(tempPoints[j]);
                         if (numberOfPoints >= 4) {
-                            tempSegments[numberOfSegments][0] = points[i];
-                            tempSegments[numberOfSegments][1] = tempPoints[j - 1];
-                            numberOfSegments++;
+                            Point[] segment = {points[i], tempPoints[j - 1]};
+                            tempSegments.enqueue(segment);
                         }
                         numberOfPoints = 2;
                     }
                 }
                 if (numberOfPoints >= 4) {
-                    tempSegments[numberOfSegments][0] = points[i];
-                    tempSegments[numberOfSegments][1] = tempPoints[tempPoints.length - 1];
-                    numberOfSegments++;
+                    Point[] segment = {points[i], tempPoints[tempPoints.length - 1]};
+                    tempSegments.enqueue(segment);
                 }
             }
         }
 
-        segments = new LineSegment[numberOfSegments];
-        for(int i = 0; i < numberOfSegments; i++) {
-            segments[i] = new LineSegment(tempSegments[i][0], tempSegments[i][1]);
+        segments = new LineSegment[tempSegments.size()];
+        for(int i = 0; i < segments.length; i++) {
+            Point[] segment = tempSegments.dequeue();
+            segments[i] = new LineSegment(segment[0], segment[1]);
         }
     }
 
@@ -82,9 +81,10 @@ public class FastCollinearPoints {
         return result;
     }
 
-    private static boolean isIncluded(Point point, Point[][] segments, int numberOfSegments) {
-        for(int i = 0; i < numberOfSegments; i++) {
-            if(point.slopeTo(segments[i][0]) == point.slopeTo(segments[i][1])) {
+    private static boolean isIncluded(Point point, Queue<Point[]> segments) {
+
+        for(Point[] segment: segments) {
+            if(point.slopeTo(segment[0]) == point.slopeTo(segment[1])) {
                 return true;
             }
         }
