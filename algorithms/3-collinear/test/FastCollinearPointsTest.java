@@ -6,19 +6,19 @@ import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 public class FastCollinearPointsTest {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void constructionNullArgument() {
-        FastCollinearPoints collinear = new FastCollinearPoints(null);
+        new FastCollinearPoints(null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void constructionNullPoints() {
         Point[] points = {new Point(0,0), new Point(1,1), null, new Point(3,3)};
-        FastCollinearPoints collinear = new FastCollinearPoints(points);
+        new FastCollinearPoints(points);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void constructionEqualPoints() {
         Point[] points = {new Point(0,0), new Point(1,1), new Point(1,1), new Point(3,3)};
-        FastCollinearPoints collinear = new FastCollinearPoints(points);
+        new FastCollinearPoints(points);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class FastCollinearPointsTest {
                 new LineSegment(new Point(14000, 10000), new Point(32000, 10000))
         };
 
-        assertArrayEquals(collinear.segments(), expected);
+        assertArrayEquals(expected, collinear.segments());
         assertEquals(collinear.numberOfSegments(), 1);
     }
 
@@ -62,7 +62,7 @@ public class FastCollinearPointsTest {
                 new LineSegment(new Point(3000, 4000), new Point(20000, 21000))
         };
 
-        assertArrayEquals(collinear.segments(), expected);
+        assertArrayEquals(expected, collinear.segments());
         assertEquals(collinear.numberOfSegments(), 2);
     }
 
