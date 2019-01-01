@@ -1,0 +1,17 @@
+<div>
+<table class="table" ng-if="list.itemsExist()">
+   <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th></th>
+   </tr>
+   <tr ng-repeat="item in list.items">
+      <td>{{ item.short_name }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.description }}</td>
+      <td><button class="btn btn-danger" ng-click="list.onRemove({index: $index});">Don't want this one!</button></td>
+   </tr>
+</table>
+<div class="alert alert-warning" role="alert" ng-if="!list.itemsExist()">Nothing found</div>
+</div>
