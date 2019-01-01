@@ -1,9 +1,22 @@
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.testng.Assert.assertEquals;
-import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
+import static org.testng.Assert.assertTrue;
 
 public class FastCollinearPointsTest {
+
+    private static <T> void assertArrayEquals(T[] expected, T[] actual) {
+        assertEquals(expected.length, actual.length);
+
+        List actualList = Arrays.asList(actual);
+        for(int i = 0; i < expected.length; i++) {
+            assertTrue(actualList.contains(expected[i]));
+        }
+    }
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void constructionNullArgument() {
         new FastCollinearPoints(null);
