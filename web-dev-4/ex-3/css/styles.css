@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+  font-family: Helvetica;
+}
+
+/** HEADER **/
+#header-nav {
+  background-color: #26a69a;
+  border-radius: 0;
+  border: 0;
+}
+
+/*Food LCC*/
+.navbar-brand h1 {
+  color: black;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 20px;
+  line-height: .75;
+}
+.navbar-brand a:hover, .navbar-brand a:focus {
+  text-decoration: none;
+}
+
+/*Navigation menu*/
+#nav-list a {
+  color: black;
+}
+#nav-list a:hover {
+  background: #E7E7E7;
+}
+#nav-list a {
+  font-size: 1.6em;
+}
+
+.navbar-header button.navbar-toggle, .navbar-header .icon-bar {
+  border: 1px solid yellow;
+}
+/*Our Menu*/
+#main-content h2 {
+    margin: 25px;
+}
+/*Chicken, Beed, Sushi*/
+#main-content > section h3 {
+    margin-top: 10px;
+}
+#main-content > section > div {
+    border: 10px solid white;
+    background: #b2dfdb;
+}
