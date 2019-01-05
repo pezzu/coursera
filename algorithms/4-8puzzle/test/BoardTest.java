@@ -8,7 +8,7 @@ public class BoardTest {
 
     @Test
     public void constructionBlank() {
-        int[][] blocks = new int[][] {{}};
+        int[][] blocks = new int[][] {};
 
         Board board = new Board(blocks);
 
