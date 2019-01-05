@@ -83,14 +83,42 @@ public class BoardTest {
 
     @Test
     public void twin() {
-        int[][] blocks = new int[][] {
+        Board board1 = new Board(new int[][] {
                 {8, 1, 3},
                 {4, 0, 2},
                 {7, 6, 5}
-        };
-        Board board = new Board(blocks);
+        });
 
-        fail();
+        assertEquals(board1.twin(), new Board(new int[][] {
+                {1, 8, 3},
+                {4, 0, 2},
+                {7, 6, 5}
+        }));
+
+
+        Board board2 = new Board(new int[][] {
+                {0, 1, 3},
+                {4, 8, 2},
+                {7, 6, 5}
+        });
+
+        assertEquals(board2.twin(), new Board(new int[][] {
+                {0, 3, 1},
+                {4, 8, 2},
+                {7, 6, 5}
+        }));
+
+        Board board3 = new Board(new int[][] {
+                {8, 0, 3},
+                {4, 1, 2},
+                {7, 6, 5}
+        });
+
+        assertEquals(board3.twin(), new Board(new int[][] {
+                {4, 0, 3},
+                {8, 1, 2},
+                {7, 6, 5}
+        }));
     }
 
     @Test
