@@ -61,8 +61,13 @@ public class Solver {
 
     // sequence of boards in a shortest solution; null if unsolvable
     public Iterable<Board> solution() {
-        // ToDo: defensive copy
-        return solution;
+        Queue<Board> result = new Queue<Board>();
+
+        for(Board move: solution) {
+            result.enqueue(move);
+        }
+
+        return result;
     }
 
     // solve a slider puzzle (given below)
