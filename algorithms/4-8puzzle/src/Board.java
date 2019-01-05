@@ -78,6 +78,18 @@ public class Board {
 
     // a board that is obtained by exchanging any pair of blocks
     public Board twin() {
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                if(blocks[i][j] != 0) {
+                    if(j < size-1 && blocks[i][j+1] != 0) {
+                        return exchange(i, j, i, j+1);
+                    }
+                    else if(i < size-1) {
+                        return exchange(i, j, i+1, j );
+                    }
+                }
+            }
+        }
         return null;
     }
 

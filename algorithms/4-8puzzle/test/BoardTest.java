@@ -120,6 +120,26 @@ public class BoardTest {
                 {8, 1, 2},
                 {7, 6, 5}
         }));
+
+        Board board4 = new Board(new int[][] {
+                {0, 1},
+                {2, 3}
+        });
+
+        assertEquals(board4.twin(), new Board(new int[][] {
+                {0, 3},
+                {2, 1}
+        }));
+
+        Board board5 = new Board(new int[][] {
+                {1, 0},
+                {2, 3}
+        });
+
+        assertEquals(board5.twin(), new Board(new int[][] {
+                {2, 0},
+                {1, 3}
+        }));
     }
 
     @Test
