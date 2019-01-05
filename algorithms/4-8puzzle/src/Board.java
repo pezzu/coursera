@@ -1,9 +1,26 @@
+import edu.princeton.cs.algs4.Queue;
+
 public class Board {
     private final int [][] blocks;
     private final int size;
 
     private final int hamming;
     private final int manhattan;
+
+    private Board exchange(int fromI, int fromJ, int toI, int toJ) {
+        int [][] aBlocks = new int[size][size];
+
+        for(int i = 0; i < size; i++) {
+            for(int j = 0; j < size; j++) {
+                aBlocks[i][j] = this.blocks[i][j];
+            }
+        }
+
+        aBlocks[fromI][fromJ] = this.blocks[toI][toJ];
+        aBlocks[toI][toJ] = this.blocks[fromI][fromJ];
+
+        return new Board(aBlocks);
+    }
 
     // construct a board from an n-by-n array of blocks
     // (where blocks[i][j] = block in row i, column j)
@@ -17,50 +34,26 @@ public class Board {
             }
         }
 
-        this.hamming = calcHamming();
-        this.manhattan = calcManhattan();
-    }
 
-    private int calcHamming() {
-        int num = 0;
+        int wrongNum = 0;
+        int distance = 0;
 
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                if(!isPositionCorrect(i, j)) {
-                    num++;
+                int N = blocks[i][j];
+                if(N != 0) {
+                    int ni = (N - 1) / size;
+                    int nj = (N - 1) % size;
+                    distance += Math.abs(i - ni) + Math.abs(j - nj);
+                    if(ni != i || nj != j) {
+                        wrongNum++;
+                    }
                 }
             }
         }
 
-        return num;
-    }
-
-    private boolean isPositionCorrect(int i, int j) {
-        int ni = (blocks[i][j] - 1) / size;
-        int nj = (blocks[i][j] - 1) % size;
-
-        return (blocks[i][j] == 0) || (ni == i && nj == j);
-    }
-
-    private int calcManhattan() {
-        int sum = 0;
-
-        for(int i = 0; i < size; i++) {
-            for(int j = 0; j < size; j++) {
-                sum += calcManhattanDistance(i, j);
-            }
-        }
-
-        return sum;
-    }
-
-    private int calcManhattanDistance(int i, int j) {
-        if(blocks[i][j] == 0) {
-            return 0;
-        }
-        int ni = (blocks[i][j] - 1) / size;
-        int nj = (blocks[i][j] - 1) % size;
-        return Math.abs(i - ni) + Math.abs(j - nj);
+        this.hamming = wrongNum;
+        this.manhattan = distance;
     }
 
     // board dimension n
@@ -112,23 +105,43 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
-        return null;
+        Queue<Board> neighbors = new Queue<Board>();
+
+        int zi = 0, zj =0;
+
+        while(blocks[zi][zj] != 0) {
+            zj++;
+            if(zj >= size) {
+                zj = 0;
+                zi++;
+            }
+        }
+
+        if(zi > 0) {
+            neighbors.enqueue(exchange(zi, zj, zi-1, zj));
+        }
+        if(zi < size -1) {
+            neighbors.enqueue(exchange(zi, zj, zi+1, zj));
+        }
+        if(zj > 0) {
+            neighbors.enqueue(exchange(zi, zj, zi, zj - 1));
+        }
+        if(zj < size - 1) {
+            neighbors.enqueue(exchange(zi, zj, zi, zj + 1));
+        }
+
+        return neighbors;
     }
 
     // string representation of this board
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append(this.size);
-        result.append('\n');
         for(int i = 0; i < size; i++) {
+            result.append('\n');
             for(int j = 0; j < size; j++) {
+                result.append(' ');
                 result.append(blocks[i][j]);
-                if(j < size-1) {
-                    result.append(' ');
-                }
-            }
-            if(i < size-1) {
-                result.append('\n');
             }
         }
 

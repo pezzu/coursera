@@ -90,7 +90,7 @@ public class BoardTest {
         };
         Board board = new Board(blocks);
 
-        assertTrue(false);
+        fail();
     }
 
     @Test
@@ -114,15 +114,15 @@ public class BoardTest {
         assertTrue(it.hasNext());
         assertEquals(it.next(), new Board(new int[][] {
                 {8, 1, 3},
-                {4, 0, 2},
-                {7, 6, 5}
+                {4, 2, 5},
+                {7, 6, 0}
         }));
 
         assertTrue(it.hasNext());
         assertEquals(it.next(), new Board(new int[][] {
                 {8, 1, 3},
-                {4, 2, 5},
-                {7, 6, 0}
+                {4, 0, 2},
+                {7, 6, 5}
         }));
 
         assertFalse(it.hasNext());
@@ -152,10 +152,10 @@ public class BoardTest {
 
         Board board4 = new Board(blocks4);
 
-        assertFalse(board1.equals(null));
-        assertTrue(board1.equals(board2));
-        assertFalse(board1.equals(board3));
-        assertFalse(board4.equals(board1));
+        assertNotEquals(board1, null);
+        assertEquals(board1, board2);
+        assertNotEquals(board1, board3);
+        assertNotEquals(board4, board1);
     }
 
     @Test
@@ -167,6 +167,6 @@ public class BoardTest {
         };
 
         Board board = new Board(blocks);
-        assertEquals(board.toString(), "3\n0 1 3\n4 2 5\n7 8 6");
+        assertEquals(board.toString(), "3\n 0 1 3\n 4 2 5\n 7 8 6");
     }
 }
