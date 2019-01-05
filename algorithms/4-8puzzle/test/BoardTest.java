@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.Queue;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
@@ -196,5 +197,29 @@ public class BoardTest {
 
         Board board = new Board(blocks);
         assertEquals(board.toString(), "3\n 0 1 3\n 4 2 5\n 7 8 6");
+    }
+
+    @Test
+    public void immutable() {
+        int[][] blocks = new int[][] {
+                {0, 1, 3},
+                {4, 2, 5},
+                {7, 8, 6}
+        };
+
+        Board board = new Board(blocks);
+        blocks[0][0] = 1;
+        blocks[0][1] = 0;
+
+        assertEquals(board, new Board(new int[][]{
+                {0, 1, 3},
+                {4, 2, 5},
+                {7, 8, 6}
+        }));
+
+        Queue<Board> neighbors = (Queue<Board>) board.neighbors();
+        neighbors.dequeue();
+
+        assertEquals(((Queue<Board>) board.neighbors()).size(), 2);
     }
 }

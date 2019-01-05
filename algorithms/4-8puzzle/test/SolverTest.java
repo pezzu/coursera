@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.Queue;
 import org.testng.annotations.Test;
 
 import java.util.Iterator;
@@ -71,6 +72,20 @@ public class SolverTest {
 
         Solver solver = new Solver(new Board(blocks));
         assertNull(solver.solution());
+    }
+
+    @Test
+    public void immutable() {
+        Board board = new Board(new int[][]{
+                {2,  0},
+                {1,  3}
+        });
+        Solver solver = new Solver(board);
+
+        Queue<Board> solution = (Queue<Board>) solver.solution();
+        solution.dequeue();
+
+        assertEquals(((Queue<Board>) solver.solution()).size(), 4);
     }
 
     @Test
