@@ -132,14 +132,14 @@ public class Board {
         if(zi > 0) {
             neighbors.enqueue(exchange(zi, zj, zi-1, zj));
         }
-        if(zi < size -1) {
-            neighbors.enqueue(exchange(zi, zj, zi+1, zj));
+        if(zj < size - 1) {
+            neighbors.enqueue(exchange(zi, zj, zi, zj + 1));
         }
         if(zj > 0) {
             neighbors.enqueue(exchange(zi, zj, zi, zj - 1));
         }
-        if(zj < size - 1) {
-            neighbors.enqueue(exchange(zi, zj, zi, zj + 1));
+        if(zi < size -1) {
+            neighbors.enqueue(exchange(zi, zj, zi + 1, zj));
         }
 
         return neighbors;

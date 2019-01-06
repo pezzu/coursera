@@ -298,6 +298,32 @@ public class SolverTest {
     }
 
     @Test
+    public void puzzle07() {
+        Board board = new Board(new int[][]{
+                {1,  2,  3},
+                {0,  7,  6},
+                {5,  4,  8}
+        });
+
+        Solver solver = new Solver(board);
+        assertTrue(solver.isSolvable());
+        assertEquals(solver.moves(), 7);
+    }
+
+    @Test
+    public void puzzle08() {
+        Board board = new Board(new int[][]{
+                {2,  3,  5},
+                {1,  0,  4},
+                {7,  8,  6}
+        });
+
+        Solver solver = new Solver(board);
+        assertTrue(solver.isSolvable());
+        assertEquals(solver.moves(), 8);
+    }
+
+    @Test
     public void unsolvable2x2() {
         Solver solver = new Solver(new Board(new int[][]{
                 {1,  0},

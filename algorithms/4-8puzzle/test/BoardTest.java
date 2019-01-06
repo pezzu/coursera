@@ -143,7 +143,7 @@ public class BoardTest {
     }
 
     @Test
-    public void neighbors() {
+    public void neighbors1() {
         int[][] blocks = new int[][] {
                 {8, 1, 3},
                 {4, 2, 0},
@@ -163,15 +163,50 @@ public class BoardTest {
         assertTrue(it.hasNext());
         assertEquals(it.next(), new Board(new int[][] {
                 {8, 1, 3},
-                {4, 2, 5},
-                {7, 6, 0}
+                {4, 0, 2},
+                {7, 6, 5}
         }));
 
         assertTrue(it.hasNext());
         assertEquals(it.next(), new Board(new int[][] {
                 {8, 1, 3},
-                {4, 0, 2},
-                {7, 6, 5}
+                {4, 2, 5},
+                {7, 6, 0}
+        }));
+
+        assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void neighbors2() {
+        int[][] blocks = new int[][] {
+                {1, 2, 3},
+                {0, 7, 6},
+                {5, 4, 8}
+        };
+        Board board = new Board(blocks);
+
+        Iterator<Board> it = board.neighbors().iterator();
+
+        assertTrue(it.hasNext());
+        assertEquals(it.next(), new Board(new int[][] {
+                {0, 2, 3},
+                {1, 7, 6},
+                {5, 4, 8}
+        }));
+
+        assertTrue(it.hasNext());
+        assertEquals(it.next(), new Board(new int[][] {
+                {1, 2, 3},
+                {7, 0, 6},
+                {5, 4, 8}
+        }));
+
+        assertTrue(it.hasNext());
+        assertEquals(it.next(), new Board(new int[][] {
+                {1, 2, 3},
+                {5, 7, 6},
+                {0, 4, 8}
         }));
 
         assertFalse(it.hasNext());
