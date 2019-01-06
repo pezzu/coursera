@@ -324,6 +324,20 @@ public class SolverTest {
     }
 
     @Test
+    public void puzzle4x4_80() {
+        Board board = new Board(new int[][]{
+                {0,  12, 9,  13},
+                {15, 11, 10, 14},
+                {3,  7,  5,  6},
+                {4,  8,  2,  1}
+        });
+
+        Solver solver = new Solver(board);
+        assertTrue(solver.isSolvable());
+        assertEquals(solver.moves(), 80);
+    }
+
+    @Test
     public void unsolvable2x2() {
         Solver solver = new Solver(new Board(new int[][]{
                 {1,  0},

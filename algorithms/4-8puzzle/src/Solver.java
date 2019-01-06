@@ -1,25 +1,33 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.Stack;
 import edu.princeton.cs.algs4.Queue;
 
-import java.util.Comparator;
 
 public class Solver {
-    private final Queue<Board> solution;
-    
-    private static final Comparator<Board> BY_MANHATTAN = new ByManhattan();
+    private final Stack<Board> solution;
 
-    private static class ByManhattan implements Comparator<Board> {
-        public int compare(Board a, Board b) {
-            return a.manhattan() - b.manhattan();
+    private static class SearchNode implements Comparable<SearchNode> {
+        private final Board board;
+        private final int moves;
+        private final SearchNode predecessor;
+
+        public SearchNode(Board board, int numberOfMoves, SearchNode predecessor) {
+            this.board = board;
+            this.moves = numberOfMoves;
+            this.predecessor = predecessor;
+        }
+
+        public int compareTo(SearchNode that) {
+            return (this.board.manhattan() + this.moves) - (that.board.manhattan() + that.moves);
         }
     }
 
-    private static void addNeighbors(Board current,  Board predecessor, MinPQ<Board> moves) {
-        for(Board neighbor: current.neighbors()) {
-            if(!neighbor.equals(predecessor)){
-                moves.insert(neighbor);
+    private static void addNeighbors(SearchNode current, MinPQ<SearchNode> moves) {
+        for(Board neighbor: current.board.neighbors()) {
+            if(current.predecessor == null || !neighbor.equals(current.predecessor.board)){
+                moves.insert(new SearchNode(neighbor, current.moves+1, current));
             }
         }
     }
@@ -30,37 +38,29 @@ public class Solver {
             throw new IllegalArgumentException();
         }
 
-        Queue<Board> rightMoves = new Queue<Board>();
+        MinPQ<SearchNode> allMoves = new MinPQ<SearchNode>();
+        MinPQ<SearchNode> twinMoves = new MinPQ<SearchNode>();
 
-        Board best = initial;
-        Board predecessor = null;
+        SearchNode best = new SearchNode(initial, 0, null);
+        SearchNode twinBest = new SearchNode(initial.twin(), 0, null);
 
-        Board twinBest = initial.twin();
-        Board twinPredecessor = null;
+        while(!best.board.isGoal() && !twinBest.board.isGoal()) {
+            addNeighbors(best, allMoves);
+            addNeighbors(twinBest, twinMoves);
 
-        while(!best.isGoal() && !twinBest.isGoal()) {
-            MinPQ<Board> allMoves = new MinPQ<Board>(BY_MANHATTAN);
-            MinPQ<Board> twinMoves = new MinPQ<Board>(BY_MANHATTAN);
-
-            addNeighbors(best, predecessor, allMoves);
-            addNeighbors(twinBest, twinPredecessor, twinMoves);
-
-            rightMoves.enqueue(best);
-
-            predecessor = best;
             best = allMoves.delMin();
-
-            twinPredecessor = twinBest;
             twinBest = twinMoves.delMin();
-
         }
-        rightMoves.enqueue(best);
-
-        if(twinBest.isGoal()) {
+        if(twinBest.board.isGoal()) {
             this.solution = null;
         }
         else {
-            this.solution = rightMoves;
+            this.solution = new Stack<Board>();
+            SearchNode next = best;
+            while(next != null) {
+                this.solution.push(next.board);
+                next = next.predecessor;
+            }
         }
     }
 
