@@ -14,9 +14,9 @@ public class SolverTest {
     @Test
     public void isSolvable() {
         int[][] blocks = new int[][] {
-                {0, 1, 3},
-                {4, 2, 5},
-                {7, 8, 6}
+                {2, 1, 3},
+                {4, 5, 6},
+                {8, 7, 0}
         };
 
         Solver solver = new Solver(new Board(blocks));

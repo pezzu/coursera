@@ -6,15 +6,21 @@ import edu.princeton.cs.algs4.Queue;
 import java.util.Comparator;
 
 public class Solver {
-
-    private final int moves;
-    private final Queue<Board> solution = new Queue<Board>();
-
+    private final Queue<Board> solution;
+    
     private static final Comparator<Board> BY_MANHATTAN = new ByManhattan();
 
     private static class ByManhattan implements Comparator<Board> {
         public int compare(Board a, Board b) {
             return a.manhattan() - b.manhattan();
+        }
+    }
+
+    private static void addNeighbors(Board current,  Board predecessor, MinPQ<Board> moves) {
+        for(Board neighbor: current.neighbors()) {
+            if(!neighbor.equals(predecessor)){
+                moves.insert(neighbor);
+            }
         }
     }
 
@@ -24,43 +30,56 @@ public class Solver {
             throw new IllegalArgumentException();
         }
 
-        MinPQ<Board> allMoves = new MinPQ<Board>(BY_MANHATTAN);
-        allMoves.insert(initial);
+        Queue<Board> rightMoves = new Queue<Board>();
 
-        Board min = allMoves.delMin();
+        Board best = initial;
         Board predecessor = null;
-        int numberOfMoves = 0;
 
-        while(!min.isGoal()) {
+        Board twinBest = initial.twin();
+        Board twinPredecessor = null;
 
-            for(Board neighbor: min.neighbors()) {
-                if(!neighbor.equals(predecessor)){
-                    allMoves.insert(neighbor);
-                }
-            }
+        while(!best.isGoal() && !twinBest.isGoal()) {
+            MinPQ<Board> allMoves = new MinPQ<Board>(BY_MANHATTAN);
+            MinPQ<Board> twinMoves = new MinPQ<Board>(BY_MANHATTAN);
 
-            predecessor = min;
-            solution.enqueue(min);
-            min = allMoves.delMin();
-            numberOfMoves++;
+            addNeighbors(best, predecessor, allMoves);
+            addNeighbors(twinBest, twinPredecessor, twinMoves);
+
+            rightMoves.enqueue(best);
+
+            predecessor = best;
+            best = allMoves.delMin();
+
+            twinPredecessor = twinBest;
+            twinBest = twinMoves.delMin();
+
         }
-        solution.enqueue(min);
+        rightMoves.enqueue(best);
 
-        this.moves = numberOfMoves;
+        if(twinBest.isGoal()) {
+            this.solution = null;
+        }
+        else {
+            this.solution = rightMoves;
+        }
     }
 
     // is the initial board solvable?
     public boolean isSolvable() {
-        return moves >= 0;
+        return solution != null;
     }
 
     // min number of moves to solve initial board; -1 if unsolvable
     public int moves() {
-        return moves;
+        return (solution == null)? -1 : solution.size() - 1;
     }
 
     // sequence of boards in a shortest solution; null if unsolvable
     public Iterable<Board> solution() {
+        if(solution == null) {
+            return null;
+        }
+
         Queue<Board> result = new Queue<Board>();
 
         for(Board move: solution) {
