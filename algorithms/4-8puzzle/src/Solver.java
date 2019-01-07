@@ -11,16 +11,18 @@ public class Solver {
     private static class SearchNode implements Comparable<SearchNode> {
         private final Board board;
         private final int moves;
+        private final int priority;
         private final SearchNode predecessor;
 
         public SearchNode(Board board, int numberOfMoves, SearchNode predecessor) {
             this.board = board;
             this.moves = numberOfMoves;
+            this.priority = board.manhattan() + numberOfMoves;
             this.predecessor = predecessor;
         }
 
         public int compareTo(SearchNode that) {
-            return (this.board.manhattan() + this.moves) - (that.board.manhattan() + that.moves);
+            return this.priority - that.priority;
         }
     }
 
@@ -39,29 +41,24 @@ public class Solver {
         }
 
         MinPQ<SearchNode> allMoves = new MinPQ<SearchNode>();
-        MinPQ<SearchNode> twinMoves = new MinPQ<SearchNode>();
 
         SearchNode best = new SearchNode(initial, 0, null);
-        SearchNode twinBest = new SearchNode(initial.twin(), 0, null);
+        SearchNode twin = new SearchNode(initial.twin(), 0, null);
+        addNeighbors(twin, allMoves);
 
-        while(!best.board.isGoal() && !twinBest.board.isGoal()) {
+        while(!best.board.isGoal()) {
             addNeighbors(best, allMoves);
-            addNeighbors(twinBest, twinMoves);
-
             best = allMoves.delMin();
-            twinBest = twinMoves.delMin();
         }
-        if(twinBest.board.isGoal()) {
-            this.solution = null;
+
+        Stack<Board> reconstructed = new Stack<Board>();
+        SearchNode next = best;
+        while(next != null) {
+            reconstructed.push(next.board);
+            next = next.predecessor;
         }
-        else {
-            this.solution = new Stack<Board>();
-            SearchNode next = best;
-            while(next != null) {
-                this.solution.push(next.board);
-                next = next.predecessor;
-            }
-        }
+
+        this.solution = (reconstructed.peek().equals(initial))? reconstructed : null;
     }
 
     // is the initial board solvable?

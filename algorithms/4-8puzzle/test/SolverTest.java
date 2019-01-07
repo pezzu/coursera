@@ -323,19 +323,6 @@ public class SolverTest {
         assertEquals(solver.moves(), 8);
     }
 
-    @Test
-    public void puzzle4x4_80() {
-        Board board = new Board(new int[][]{
-                {0,  12, 9,  13},
-                {15, 11, 10, 14},
-                {3,  7,  5,  6},
-                {4,  8,  2,  1}
-        });
-
-        Solver solver = new Solver(board);
-        assertTrue(solver.isSolvable());
-        assertEquals(solver.moves(), 80);
-    }
 
     @Test
     public void unsolvable2x2() {
@@ -393,31 +380,6 @@ public class SolverTest {
                 {1,  2,  3},
                 {4,  5,  6},
                 {8,  7,  0}
-        }));
-
-        assertFalse(solver.isSolvable());
-        assertEquals(solver.moves(), -1);
-        assertNull(solver.solution());
-    }
-
-    @Test
-    public void unsolvable4x4() {
-        Solver solver = new Solver(new Board(new int[][]{
-                {1,  2,  3,  4},
-                {5,  6,  7,  8},
-                {9,  10, 11, 12},
-                {13, 15, 14, 0}
-        }));
-
-        assertFalse(solver.isSolvable());
-        assertEquals(solver.moves(), -1);
-        assertNull(solver.solution());
-
-        solver = new Solver(new Board(new int[][]{
-                {3, 2,  4,  8},
-                {1, 6,  0,  12},
-                {5, 10, 7,  11},
-                {9, 13, 14, 15}
         }));
 
         assertFalse(solver.isSolvable());
