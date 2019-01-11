@@ -52,6 +52,22 @@ public class PointSETTest {
     }
 
     @Test
+    public void contains() {
+        PointSET ps = new PointSET();
+        assertFalse(ps.contains(new Point2D(0,0)));
+
+        ps.insert(new Point2D(0, 0));
+        assertFalse(ps.contains(new Point2D(1, 1)));
+        assertTrue(ps.contains(new Point2D(0, 0)));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void containsNull() {
+        PointSET ps = new PointSET();
+        ps.contains(null);
+    }
+
+    @Test
     public void rangeEmpty() {
         PointSET ps = new PointSET();
 
@@ -96,9 +112,9 @@ public class PointSETTest {
         Iterator<Point2D> it = ps.range(new RectHV(-1, -1, 10, 10)).iterator();
 
         assertEquals(it.next(), point1);
-        assertEquals(it.next(), point2);
         assertEquals(it.next(), point3);
         assertEquals(it.next(), point4);
+        assertEquals(it.next(), point2);
         assertEquals(it.next(), point5);
         assertFalse(it.hasNext());
     }
@@ -122,8 +138,8 @@ public class PointSETTest {
         Iterator<Point2D> it = ps.range(new RectHV(-1, -1, 2, 2)).iterator();
 
         assertEquals(it.next(), point1);
-        assertEquals(it.next(), point2);
         assertEquals(it.next(), point3);
+        assertEquals(it.next(), point2);
         assertFalse(it.hasNext());
     }
 
@@ -167,8 +183,8 @@ public class PointSETTest {
         Iterator<Point2D> it = ps.range(new RectHV(0, 0, 1, 3)).iterator();
 
         assertEquals(it.next(), point1);
-        assertEquals(it.next(), point2);
         assertEquals(it.next(), point3);
+        assertEquals(it.next(), point2);
         assertEquals(it.next(), point5);
         assertFalse(it.hasNext());
     }
