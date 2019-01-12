@@ -56,7 +56,7 @@ public class PointSET {
         Set<Point2D> result = new TreeSet<Point2D>();
 
         for(Point2D point: points) {
-            if(isInside(point, rect)) {
+            if(rect.contains(point)) {
                 result.add(point);
             }
         }
@@ -86,9 +86,5 @@ public class PointSET {
     // unit testing of the methods (optional)
     public static void main(String[] args) {
 
-    }
-
-    private boolean isInside(Point2D p, RectHV r) {
-        return p.x() >= r.xmin() && p.x() <= r.xmax() && p.y() >= r.ymin() && p.y() <= r.ymax();
     }
 }

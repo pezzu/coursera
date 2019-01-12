@@ -50,7 +50,8 @@ public class KdTree {
             return new Node(point, orientation);
         }
 
-        double cmp = (parent.orientation == Node.VERTICAL)? parent.point.y() - point.y() : parent.point.x() - point.x();
+        int cmp = (parent.orientation == Node.VERTICAL)?
+                Point2D.Y_ORDER.compare(parent.point, point) : Point2D.X_ORDER.compare(parent.point, point);
         if(cmp < 0) {
             parent.left = insert(parent.left, point, !orientation);
         }
@@ -80,7 +81,8 @@ public class KdTree {
             return false;
         }
 
-        double cmp = (parent.orientation == Node.VERTICAL)? parent.point.y() - point.y() : parent.point.x() - point.x();
+        int cmp = (parent.orientation == Node.VERTICAL)?
+                Point2D.Y_ORDER.compare(parent.point, point) : Point2D.X_ORDER.compare(parent.point, point);
         if(cmp < 0) {
             return contains(parent.left, point);
         }
