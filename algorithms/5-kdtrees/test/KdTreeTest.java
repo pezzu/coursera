@@ -134,9 +134,9 @@ public class KdTreeTest {
         Iterator<Point2D> it = kd.range(new RectHV(-1, -1, 10, 10)).iterator();
 
         assertEquals(it.next(), point1);
+        assertEquals(it.next(), point2);
         assertEquals(it.next(), point3);
         assertEquals(it.next(), point4);
-        assertEquals(it.next(), point2);
         assertEquals(it.next(), point5);
         assertFalse(it.hasNext());
     }
@@ -160,8 +160,8 @@ public class KdTreeTest {
         Iterator<Point2D> it = kd.range(new RectHV(-1, -1, 2, 2)).iterator();
 
         assertEquals(it.next(), point1);
-        assertEquals(it.next(), point3);
         assertEquals(it.next(), point2);
+        assertEquals(it.next(), point3);
         assertFalse(it.hasNext());
     }
 
@@ -205,8 +205,8 @@ public class KdTreeTest {
         Iterator<Point2D> it = kd.range(new RectHV(0, 0, 1, 3)).iterator();
 
         assertEquals(it.next(), point1);
-        assertEquals(it.next(), point3);
         assertEquals(it.next(), point2);
+        assertEquals(it.next(), point3);
         assertEquals(it.next(), point5);
         assertFalse(it.hasNext());
     }
