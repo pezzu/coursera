@@ -74,13 +74,28 @@ public class KdTreeTest {
     }
 
     @Test
-    public void contains() {
+    public void containsEmpty() {
         KdTree kd = new KdTree();
-        assertFalse(kd.contains(new Point2D(0,0)));
+        assertFalse(kd.contains(new Point2D(0, 0)));
+    }
 
+    @Test
+    public void containsNonEmpty() {
+        KdTree kd = new KdTree();
         kd.insert(new Point2D(0, 0));
         assertFalse(kd.contains(new Point2D(1, 1)));
         assertTrue(kd.contains(new Point2D(0, 0)));
+    }
+
+    @Test
+    public void contains() {
+        KdTree kd = new KdTree();
+        kd.insert(new Point2D(0.7, 0.2));
+        kd.insert(new Point2D(0.5, 0.4));
+        kd.insert(new Point2D(0.2, 0.3));
+        kd.insert(new Point2D(0.4, 0.7));
+        kd.insert(new Point2D(0.9, 0.6));
+        assertTrue(kd.contains(new Point2D(0.5, 0.4)));
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
@@ -136,8 +151,8 @@ public class KdTreeTest {
         assertEquals(it.next(), point1);
         assertEquals(it.next(), point2);
         assertEquals(it.next(), point3);
-        assertEquals(it.next(), point4);
         assertEquals(it.next(), point5);
+        assertEquals(it.next(), point4);
         assertFalse(it.hasNext());
     }
 

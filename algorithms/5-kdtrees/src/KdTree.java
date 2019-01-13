@@ -83,7 +83,7 @@ public class KdTree {
             return true;
         }
 
-        int cmp = compare(parent.point, point, parent.orientation);
+        int cmp = compare(point, parent.point, parent.orientation);
         if(cmp <= 0) {
             return contains(parent.left, point);
         }
