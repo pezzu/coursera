@@ -51,17 +51,15 @@ public class KdTree {
             return new Node(point, orientation);
         }
 
-        int cmp = compare(parent.point, point, parent.orientation);
+        int cmp = compare(point, parent.point, parent.orientation);
         if(cmp < 0) {
             parent.left = insert(parent.left, point, !orientation);
         }
         else if(cmp > 0) {
             parent.right = insert(parent.right, point, !orientation);
         }
-        else {
-            if(!parent.point.equals(point)) {
-                parent.left = insert(parent.left, point, !orientation);
-            }
+        else if(!parent.point.equals(point)) {
+            parent.left = insert(parent.left, point, !orientation);
         }
 
         return parent;
@@ -81,26 +79,21 @@ public class KdTree {
             return false;
         }
 
-        int cmp = compare(parent.point, point, parent.orientation);
+        if(parent.point.equals(point)) {
+            return true;
+        }
 
-        if(cmp < 0) {
+        int cmp = compare(parent.point, point, parent.orientation);
+        if(cmp <= 0) {
             return contains(parent.left, point);
         }
-        else if(cmp > 0) {
-            return contains(parent.right, point);
-        }
         else {
-            if(parent.point.equals(point)) {
-                return true;
-            }
-            else {
-                return contains(parent.left, point);
-            }
+            return contains(parent.right, point);
         }
     }
 
     private int compare(Point2D p1, Point2D p2, boolean orientation) {
-        return orientation == Node.VERTICAL? Point2D.Y_ORDER.compare(p1, p2) : Point2D.X_ORDER.compare(p1, p2);
+        return orientation == Node.VERTICAL? Point2D.X_ORDER.compare(p1, p2) : Point2D.Y_ORDER.compare(p1, p2);
     }
 
     // draw all points to standard draw
@@ -180,16 +173,36 @@ public class KdTree {
         int cmp = compare(goal, node.point, node.orientation);
         if(cmp <= 0) {
             newChampion = nearest(node.left, newChampion, goal);
-//            if(canBeCloser)
-            newChampion = nearest(node.right, newChampion, goal);
+            if(shouldGoRight(node, newChampion, goal)) {
+                newChampion = nearest(node.right, newChampion, goal);
+            }
         }
         else {
             newChampion = nearest(node.right, newChampion, goal);
-//            if(canBeCloser)
-            newChampion = nearest(node.left, newChampion, goal);
+            if(shouldGoLeft(node, newChampion, goal)) {
+                newChampion = nearest(node.left, newChampion, goal);
+            }
         }
 
         return newChampion;
+    }
+
+    private boolean shouldGoRight(Node node, Node champion, Point2D goal) {
+        if(node.orientation == Node.VERTICAL) {
+            return node.point.x() - goal.x() < champion.point.distanceTo(goal);
+        }
+        else {
+            return node.point.y() - goal.y() < champion.point.distanceTo(goal);
+        }
+    }
+
+    private boolean shouldGoLeft(Node node, Node champion, Point2D goal) {
+        if(node.orientation == Node.VERTICAL) {
+            return goal.x() - node.point.x() < champion.point.distanceTo(goal);
+        }
+        else {
+            return goal.y() - node.point.y() < champion.point.distanceTo(goal);
+        }
     }
 
     // unit testing of the methods (optional)
