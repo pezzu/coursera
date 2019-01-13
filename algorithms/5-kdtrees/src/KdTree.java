@@ -133,7 +133,7 @@ public class KdTree {
                 }
             }
 
-            if(isOnTheRigth(rect, node.point, node.orientation)) {
+            if(isOnTheRight(rect, node.point, node.orientation)) {
                 if(node.right != null) {
                     layer.enqueue(node.right);
                 }
@@ -147,7 +147,7 @@ public class KdTree {
         return (orientation == Node.VERTICAL)? rect.xmin() <= point.x() : rect.ymin() <= point.y();
     }
 
-    private boolean isOnTheRigth(RectHV rect, Point2D point, boolean orientation) {
+    private boolean isOnTheRight(RectHV rect, Point2D point, boolean orientation) {
         return (orientation == Node.VERTICAL)? rect.xmax() > point.x() : rect.ymax() > point.y();
     }
 
@@ -157,7 +157,39 @@ public class KdTree {
             throw new IllegalArgumentException();
         }
 
-        return null;
+        if(size() == 0) {
+            return null;
+        }
+
+        Node neighbor = nearest(root, root, p);
+
+        return neighbor.point;
+    }
+
+    private Node nearest(Node node, Node champion, Point2D goal) {
+        if(node == null) {
+            return champion;
+        }
+
+        if(node.point.equals(goal)) {
+            return node;
+        }
+
+        Node newChampion = (node.point.distanceTo(goal) < champion.point.distanceTo(goal))? node : champion;
+
+        int cmp = compare(goal, node.point, node.orientation);
+        if(cmp <= 0) {
+            newChampion = nearest(node.left, newChampion, goal);
+//            if(canBeCloser)
+            newChampion = nearest(node.right, newChampion, goal);
+        }
+        else {
+            newChampion = nearest(node.right, newChampion, goal);
+//            if(canBeCloser)
+            newChampion = nearest(node.left, newChampion, goal);
+        }
+
+        return newChampion;
     }
 
     // unit testing of the methods (optional)

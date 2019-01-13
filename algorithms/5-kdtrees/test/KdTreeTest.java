@@ -267,6 +267,34 @@ public class KdTreeTest {
         assertTrue(kd.nearest(point00).equals(point01) || kd.nearest(point00).equals(point10));
     }
 
+    @Test
+    public void nearest() {
+        KdTree kd = new KdTree();
+        Point2D point1 = new Point2D(0,2);
+        Point2D point2 = new Point2D(3,0);
+        Point2D point3 = new Point2D(-3,4);
+        Point2D point4 = new Point2D(-5,-6);
+        Point2D point5 = new Point2D(-7,3);
+        Point2D point6 = new Point2D(-1,9);
+        Point2D point7 = new Point2D(2,2);
+        Point2D point8 = new Point2D(10,10);
+        Point2D point9 = new Point2D(8,7);
+        Point2D point10 = new Point2D(4,-7);
+
+        kd.insert(point1);
+        kd.insert(point2);
+        kd.insert(point3);
+        kd.insert(point4);
+        kd.insert(point5);
+        kd.insert(point6);
+        kd.insert(point7);
+        kd.insert(point8);
+        kd.insert(point9);
+        kd.insert(point10);
+
+        assertEquals(kd.nearest(new Point2D(-9, 7)), point5);
+    }
+
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void nearestNull() {
         KdTree kd = new KdTree();
